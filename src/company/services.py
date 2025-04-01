@@ -36,3 +36,17 @@ async def get_list_companies(db: AsyncSession) -> list[Company] | Exception:
     except Exception as e:
         await db.rollback()
         return e
+
+
+async def get_current_company(company_id: int, db: AsyncSession) -> Company | Exception:
+    try:
+        query = select(Company).where(Company.company_id == company_id)
+
+        res = await db.execute(query)
+        company = res.scalars().first()
+
+        return company
+
+    except Exception as e:
+        await db.rollback()
+        return e
