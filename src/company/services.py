@@ -5,7 +5,8 @@ from src.company.models import Company
 from src.company.schemas import NewCompanySchema, UpdateCompanySchema
 
 
-async def create_company(company_data: NewCompanySchema, db: AsyncSession) -> Company | Exception:
+async def create_company(company_data: NewCompanySchema,
+                         db: AsyncSession) -> Company | Exception:
     try:
         company = Company(
             company_address=company_data.company_address,
@@ -38,7 +39,8 @@ async def get_list_companies(db: AsyncSession) -> list[Company] | Exception:
         return e
 
 
-async def get_current_company(company_id: int, db: AsyncSession) -> Company | Exception:
+async def get_current_company(company_id: int,
+                              db: AsyncSession) -> Company | Exception:
     try:
         query = select(Company).where(Company.company_id == company_id)
 
