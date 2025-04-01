@@ -60,3 +60,16 @@ async def valid_update_company(id: int,
 
     return CompanySchema.model_validate(updated_company, from_attributes=True)
 
+
+async def valid_delete_company(id: int,
+                               db: AsyncSession = Depends(get_db_session)
+                               ) -> str:
+    if not id:
+        raise
+
+    status = await services.delete_company(id, db)
+
+    if isinstance(status, Exception):
+        raise status
+
+    return "Successfully"

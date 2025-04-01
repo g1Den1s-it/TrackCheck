@@ -1,4 +1,4 @@
-from sqlalchemy import select, update
+from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.company.models import Company
@@ -67,6 +67,19 @@ async def update_company(company_id: int,
         updated_company = res.scalars().first()
 
         return updated_company
+
+    except Exception as e:
+        await db.rollback()
+        return e
+
+
+async def delete_company(company_id: int,
+                         db: AsyncSession) -> None | Exception:
+    try:
+        query = delete(Company).where(Company.company_id == company_id)
+
+        await db.execute(query)
+        await db.commit()
 
     except Exception as e:
         await db.rollback()

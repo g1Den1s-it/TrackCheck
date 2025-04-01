@@ -1,7 +1,8 @@
 from fastapi import Depends
 from fastapi.routing import APIRouter
 
-from src.company.dependencies import valid_new_company, valid_list_companies, valid_company, valid_update_company
+from src.company.dependencies import valid_new_company, valid_list_companies, valid_company, valid_update_company, \
+    valid_delete_company
 from src.company.schemas import CompanySchema, NewCompanySchema, UpdateCompanySchema
 
 company_router = APIRouter(prefix="/company")
@@ -34,3 +35,9 @@ async def get_company(company: CompanySchema = Depends(valid_company)):
 async def update_company(company: UpdateCompanySchema = Depends(valid_update_company)):
     return company
 
+
+@company_router.delete("/{id}/delete/",
+                       response_model=str,
+                       status_code=200)
+async def delete_company(status: str = Depends(valid_delete_company)):
+    return status
