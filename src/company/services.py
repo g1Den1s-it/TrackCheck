@@ -1,8 +1,8 @@
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.company.models import Company
-from src.company.schemas import NewCompanySchema
+from src.company.schemas import NewCompanySchema, UpdateCompanySchema
 
 
 async def create_company(company_data: NewCompanySchema, db: AsyncSession) -> Company | Exception:
@@ -46,6 +46,27 @@ async def get_current_company(company_id: int, db: AsyncSession) -> Company | Ex
         company = res.scalars().first()
 
         return company
+
+    except Exception as e:
+        await db.rollback()
+        return e
+
+
+async def update_company(company_id: int,
+                         update_data: UpdateCompanySchema,
+                         db: AsyncSession) -> Company | Exception:
+    try:
+        query = (update(Company)
+                 .where(Company.company_id == company_id)
+                 .values(update_data.model_dump(exclude_none=True))
+                 .returning(Company))
+
+        res = await db.execute(query)
+        await db.commit()
+
+        updated_company = res.scalars().first()
+
+        return updated_company
 
     except Exception as e:
         await db.rollback()
