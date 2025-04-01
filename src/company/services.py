@@ -29,7 +29,7 @@ async def get_list_companies(db: AsyncSession) -> list[Company] | Exception:
         query = select(Company)
 
         res = await db.execute(query)
-        list_companies = res.scalars().all()
+        list_companies = list(res.scalars().all())
 
         return list_companies
 

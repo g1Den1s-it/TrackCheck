@@ -18,3 +18,14 @@ async def valid_new_company(company_data: NewCompanySchema,
 
     return CompanySchema.model_validate(company, from_attributes=True)
 
+
+async def valid_list_companies(db: AsyncSession = Depends(get_db_session)
+                               ) -> list[CompanySchema]:
+    list_companies = await services.get_list_companies(db)
+
+    if isinstance(list_companies, Exception):
+        raise list_companies
+
+    list_companies = [CompanySchema.model_validate(company, from_attributes=True) for company in list_companies]
+
+    return list_companies
