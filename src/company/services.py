@@ -13,6 +13,9 @@ async def create_company(company_data: NewCompanySchema,
             company_name=company_data.company_name,
             company_email=company_data.company_email,
             company_phone=company_data.company_phone,
+            user1=company_data.user1,
+            user2=company_data.user2,
+            user3=company_data.user3
         )
 
         db.add(company)

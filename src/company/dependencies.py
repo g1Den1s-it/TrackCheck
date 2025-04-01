@@ -62,6 +62,9 @@ async def valid_update_company(id: int,
     if isinstance(updated_company, Exception):
         raise HTTPDatabaseError()
 
+    if not updated_company:
+        raise HTTPClientException("Company does not exist.")
+
     return CompanySchema.model_validate(updated_company, from_attributes=True)
 
 

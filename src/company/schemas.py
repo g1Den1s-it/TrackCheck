@@ -6,6 +6,9 @@ class NewCompanySchema(BaseModel):
     company_address: str | None = None
     company_email: EmailStr
     company_phone: str | None = None
+    user1: int | None = None
+    user2: int | None = None
+    user3: int | None = None
 
 
 class UpdateCompanySchema(BaseModel):
@@ -13,6 +16,9 @@ class UpdateCompanySchema(BaseModel):
     company_address: str | None = None
     company_email: EmailStr | None = None
     company_phone: str | None = None
+    user1: int | None = None
+    user2: int | None = None
+    user3: int | None = None
 
 
 class CompanySchema(BaseModel):
@@ -21,4 +27,6 @@ class CompanySchema(BaseModel):
     company_address: str | None = None
     company_email: EmailStr
     company_phone: str | None = None
-
+    user1: int | None = None
+    user2: int | None = None
+    user3: int | None = None

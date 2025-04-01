@@ -11,7 +11,7 @@ class Company(Base):
     company_address = Column(String(164), nullable=True)
     company_email = Column(String(124), unique=True, nullable=False)
     company_phone = Column(String(18), nullable=True)
-    # user1 = relationship()
-    # user2 = relationship()
-    # user3 = relationship()
+    user1 = Column(Integer, nullable=True)
+    user2 = Column(Integer, nullable=True)
+    user3 = Column(Integer, nullable=True)
 
